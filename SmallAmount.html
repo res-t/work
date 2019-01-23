@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <script src="./layui/layui.all.js"></script>
+     <link rel="stylesheet" href="./layui/css/layui.css">
+
+    <style>
+    *{
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+     }
+     ul li{
+         list-style: none;
+     }
+    .app_new{
+        height: 100%;
+       
+        position: relative;
+    }
+    .text_title{
+        font-size: 24px;
+        font-family: PingFangSC-Semibold;
+        color: #fff;
+        letter-spacing: 0;
+        line-height: 33px;
+        margin-top: 27px;
+        margin-bottom: 20px;
+        width: 108px;
+        text-align: left
+    }
+    .text_box .text_detail li{
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #FFFFFF;
+        letter-spacing: 1.5px;
+        line-height: 26px;
+    }
+    .app_top{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding:29px 24.4px 21.8px 0
+    }
+    .app_img{
+        width: 176.7px;
+        height: 181.2px;
+    }
+    .app_img img{
+        width: 100%;
+        height: 100%;
+    }
+    .user_content{
+            margin:0 auto;
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            position: absolute;
+            left: 50%;
+            margin-left: -157.5px;
+            padding-bottom: 20px;
+            
+        }
+        .user_content ul{
+            /* width: 275px; */
+            height: 220px;list-style: none;
+        }
+        .user_content ul li{
+            width: 100%;
+            height: 60px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            line-height: 3.5;
+            border-radius: 4px;
+
+        }
+        .user_content ul li input{
+            height: 45px;
+            margin-left: 10px;
+            width: 120px;
+        }
+        .btn-y{
+            display: inline-block;
+            border-radius: 4px;
+            text-decoration: none;
+            border: 1px solid rgb(240, 83, 11);
+            height: 25px;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 12px;
+            width: 100px;
+            background: #fff;
+            color: rgb(240, 83, 11);
+            margin-right: 5px;
+
+        }
+        #vre-code{
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .icon-yzm{
+            width: 30px;
+            height:30px;
+            vertical-align: middle;
+        }
+        .submit{
+            background-image: linear-gradient(-180deg, #82A3FF 0%, #315DD6 100%);
+            border-radius: 25px;
+            width: 100%;height: 50px;color: #fff;margin: 0 auto;line-height: 3;
+        }
+        .reg-font{
+            font-size: 4px;
+            margin-top: 10px;
+        }
+        input{outline:none;border: none}
+    </style>
+</head>
+<body style="width:100%;height:100%; background: #230C82;">
+    <div class="app_new">
+        <div class="app_top">
+            <div class="text_box">
+            </div>
+            <div class="app_img">
+                <img src="./img/Group.png" alt="">
+            </div>
+        </div>
+        <div class="user_content">
+            <ul>
+                <li>
+                    <img src="./img/yzm3.png" alt="" class="icon-yzm">
+                    <input type="text" placeholder="请输入手机号" class="c6" id="phone_num">
+                </li>
+                <li>
+                    <img src="./img/yzm2.png" alt="" class="icon-yzm">
+                    <input type="text" id="code-num" placeholder="请输入校验码" class="c6">
+                    <span id="vre-code" onclick="getNum()"></span>
+                </li>
+                <li>
+                    <img src="./img/yzm1.png" alt="" class="icon-yzm">
+                    <input type="text"  placeholder="请输入验证码" maxlength="4" class="c6" id="smsCode">
+                    <button class="btn-y" id="get_valicode" onclick="countDown()" >获取验证码</button>
+                </li>
+            </ul>
+            <div style="text-align:center;">
+                <p class="submit" id="submit" onclick=" contart()">立即申请</p>
+                <p class="reg-font">点击“立即申请”即表示您同意 <span style="color:#FF7B3A">《用户注册协议》</span></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        //生成验证码
+        var vreCode =  document.getElementById("vre-code");
+        var getNum = function(){
+            var num="";
+            for(var i=0;i<4;i++){
+                num+=Math.floor(Math.random()*10)
+            }
+            vreCode.innerHTML=num
+        }
+        getNum();
+        //对比验证码
+        var codeNum = document.getElementById('code-num');//获取输入的校正码
+        var contart = function(){
+            if(parseInt(vreCode.innerHTML)==parseInt(codeNum.value)){
+                console.log('校正码正确');
+               /* $.ajax({
+                    type: 'POST',
+                    url: '',
+                    contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+                    data:{},
+                    success: function(data){
+                        if(data.state=="200"){
+                            layer.open({
+                                content: "注册成功",
+                                btn: '确定'
+                            });
+                            window.location.href=downUrl;
+                            return false;
+                        }else {
+                            layer.open({
+                                content: data.msg,
+                                btn: '确定'
+                            });
+                            return false;
+                        }
+                    },
+                    error:function(data) {
+                        console.log(data.msg);
+                    },
+            });*/
+                
+            } else{
+                layer.open({
+                content: '请输入正确的校验码',
+                btn: '确定'
+             });
+                setTimeout(function(){codeNum.value=''},2000)
+            }
+        }
+        //获取短信验证码倒计时
+        var cutdownFlag = true;//定时器开关
+        function countDown(){
+            var phoneNum = document.getElementById('phone_num').value;
+            if(phoneNum ==''){//手机号不能我空
+                layer.open({
+                content: '请输入手机号',
+                btn: '确定'
+            });
+               return;
+            }else if(parseInt(vreCode.innerHTML)!=parseInt(codeNum.value)){//校验码
+                layer.open({
+                    content: '请输入正确的校验码',
+                    btn: '确定'
+              });
+              return;
+
+            }else if(cutdownFlag==true){
+                //$ajax({ 
+                    //type: 'POST',
+                    //url:'',
+                    var time = 60;
+                    var timer = setInterval(function () {
+                        document.getElementById('get_valicode').innerText = (time + "s后重新获取");
+                        // console.log(time)
+                        cutdownFlag=false;
+                        time--;
+                        if (time < 0) {
+                            clearInterval(timer);
+                            document.getElementById("get_valicode").innerText = ("重新获取");
+                            cutdownFlag = true;
+                        }
+                    }, 1000);
+                //})
+                
+            }
+        }
+
+    </script>
+</body>
+</html>
